@@ -1,27 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Suite" thread-count="5" parallel="tests">
-<listeners>
-     <listener class-name="listeners.Listeners"/>
-  </listeners>
-  <test thread-count="5" name="LoginTest">
-    <classes>
-      <class name="tests.LoginTest"/>     
-    </classes>
-  </test> <!-- Test1 -->
-  <test thread-count="5" name="ForgotPasswordTest">
-    <classes>
-    <class name="tests.ForgotPasswordTest"/>
-    </classes>
-  </test> <!-- Test1 -->
-  <test thread-count="5" name="ForgotLoginTest">
-    <classes>
-      <class name="tests.ForgotLoginTest"/>
-    </classes>
-  </test> <!-- Test1 -->
-  <test thread-count="5" name="RegisterTest">
-    <classes>
-      <class name="tests.RegisterTest"/>
-    </classes>
-  </test> <!-- Test1 -->
-</suite> <!-- Suite -->
+<suite name="SauceLabsCrossBrowserSuite" parallel="tests" thread-count="3">
+
+    <!-- LoginTest -->
+    <test name="ChromeLoginTest">
+        <parameter name="browsername" value="chrome" />
+        <parameter name="version" value="latest" />
+        <parameter name="platform" value="Windows 11" />
+        <classes>
+            <class name="tests.LoginTest" />
+        </classes>
+    </test>
+
+    <!-- RegisterTest -->
+    <test name="FirefoxRegisterTest">
+        <parameter name="browsername" value="firefox" />
+        <parameter name="version" value="latest" />
+        <parameter name="platform" value="Windows 11" />
+        <classes>
+            <class name="tests.RegisterTest" />
+        </classes>
+    </test>
+
+    <!-- ForgotPasswordTest -->
+    <test name="EdgeForgotPasswordTest">
+        <parameter name="browsername" value="edge" />
+        <parameter name="version" value="latest" />
+        <parameter name="platform" value="Windows 11" />
+        <classes>
+            <class name="tests.ForgotPasswordTest" />
+        </classes>
+    </test>
+
+    <!-- ForgotLoginTest -->
+    <test name="ChromeForgotLoginTest">
+        <parameter name="browsername" value="chrome" />
+        <parameter name="version" value="latest" />
+        <parameter name="platform" value="Windows 11" />
+        <classes>
+            <class name="tests.ForgotLoginTest" />
+        </classes>
+    </test>
+
+</suite>

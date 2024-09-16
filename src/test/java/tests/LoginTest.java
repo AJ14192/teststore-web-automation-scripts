@@ -26,7 +26,7 @@ public class LoginTest extends Base {
     @BeforeMethod
     public void openApplication() throws IOException {
         log = LogManager.getLogger(LoginTest.class);
-        driver = initializeDriver();
+        driver = initializeDriver("chrome", "windows 11", "latest");
         log.debug("Opening browser and navigating url");
         driver.get(prop.getProperty("url"));
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
