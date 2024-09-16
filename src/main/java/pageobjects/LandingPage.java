@@ -22,6 +22,10 @@ public class LandingPage {
 	@FindBy(xpath="//a[normalize-space()='Forgot your password?']")
 	WebElement forgotPassword;
 	
+	
+	@FindBy(xpath = "//a[normalize-space()='Forgot your login?']")
+	WebElement forgotLogin;
+	
 	public WebElement loginOrRegister() {
 		
 		return loginOrRegister;
@@ -29,5 +33,9 @@ public class LandingPage {
 	
 	public WebElement forgotPassword() {
 		return forgotPassword;
+	}
+	
+	public WebElement forgotLogin() {
+		return forgotLogin;
 	}
 }

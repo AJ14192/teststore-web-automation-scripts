@@ -51,24 +51,22 @@ public class Listeners extends Base implements ITestListener {
 
 	@Override
 	public void onTestFailure(ITestResult result) {
-		
-		String testName = result.getName();
-		extentTestThread.get().fail(result.getThrowable());
-		try {
-			driver = (WebDriver)result.getTestClass().getRealClass().getDeclaredField("driver").get(result.getInstance());
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}
-		
-		try {
-			String screenshotFilePath = takeScreenshot(testName,driver);
-			extentTestThread.get().addScreenCaptureFromPath(screenshotFilePath, testName+" Test is Failed");
-			
-		} catch (IOException e) {			
-			e.printStackTrace();
-		}
-	
+	    String testName = result.getName();
+	    extentTestThread.get().fail(result.getThrowable());
+	    
+	    try {
+	        // Accessing driver using reflection
+	        driver = (WebDriver) result.getTestClass().getRealClass().getDeclaredField("driver").get(result.getInstance());
+	        
+	        // Taking screenshot
+	        String screenshotFilePath = takeScreenshot(testName, driver);
+	        
+	        // Adding screenshot to the report
+	        extentTestThread.get().addScreenCaptureFromPath(screenshotFilePath, testName + " Test Failed");
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 package tests;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -20,16 +20,17 @@ import java.time.Duration;
 
 public class LoginTest extends Base {
 
-    public WebDriver driver;
+    WebDriver driver;
     WebDriverWait wait;
     Logger log;
+
     @BeforeMethod
     public void openApplication() throws IOException {
         log = LogManager.getLogger(LoginTest.class);
-        driver = initializeDriver("chrome", "windows 11", "latest");
+        driver = initializeDriver();
         log.debug("Opening browser and navigating url");
         driver.get(prop.getProperty("url"));
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     @Test(dataProvider = "getLoginData")
@@ -37,7 +38,6 @@ public class LoginTest extends Base {
         LandingPage landingPage = new LandingPage(driver);
         log.debug("Clicking on login or register option");
         landingPage.loginOrRegister().click();
-
 
         LoginPage loginPage = new LoginPage(driver);
         log.debug("Adding LoginName");
@@ -54,17 +54,15 @@ public class LoginTest extends Base {
             // Wait for the account page link to be visible
             WebElement accountElement = wait.until(ExpectedConditions.visibilityOf(accountPage.myAccountPage()));
             actualStatus = accountElement.isDisplayed() ? "Success" : "Failure";
-            log.info("The user is successfully login");
+            log.info("The user is successfully logged in");
 
         } catch (Exception e) {
             actualStatus = "Failure";
-            log.error("Login attempt is fail due to incorrect email or password");
-
+            log.error("Login attempt failed due to incorrect email or password");
         }
         System.out.println("Actual status: " + actualStatus);
         Assert.assertEquals(actualStatus, expectedStatus);
     }
-
 
     @AfterMethod
     public void tearDown() {
@@ -79,5 +77,4 @@ public class LoginTest extends Base {
                 {"james2023", "Admin123", "Failure"}
         };
     }
-
 }

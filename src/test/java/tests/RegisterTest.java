@@ -2,13 +2,10 @@ package tests;
 
 import java.io.IOException;
 import java.time.Duration;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pageobjects.LandingPage;
 import pageobjects.LoginPage;
@@ -19,15 +16,11 @@ public class RegisterTest extends Base {
 
     public WebDriver driver;
     WebDriverWait wait;
-    Logger log;
 
-    @Parameters({"browsername", "version", "platform"})
     @BeforeMethod
-    public void openApplication(String browsername, String version, String platform) throws IOException {
-        log = LogManager.getLogger(RegisterTest.class);
-        driver = initializeDriver(browsername, version, platform);
-        log.debug("Opening browser and navigating to the application");
-        driver.get(prop.getProperty("url"));
+    public void openApplication() throws IOException {
+        driver = initializeDriver();
+        driver.get(prop.getProperty("url"));  // Ensure this points to a valid URL
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
 
@@ -41,12 +34,12 @@ public class RegisterTest extends Base {
 
         RegisterPage registerPage = new RegisterPage(driver);
         registerPage.firstName().sendKeys(registerPage.generateRandomFName());
-        registerPage.lasttName().sendKeys(registerPage.generateRandomLName());
+        registerPage.lastName().sendKeys(registerPage.generateRandomLName());  // Fixed method call
         registerPage.emailAddress().sendKeys(registerPage.generateRandomEmail());
         registerPage.telePhone().sendKeys(registerPage.generateRandomTelephone());
         registerPage.faxNumber().sendKeys(registerPage.generateRandomFaxNumber());
         registerPage.companyName().sendKeys("Google Inc");
-        registerPage.addressLine1().sendKeys("A/17 Harimandir Socity");
+        registerPage.addressLine1().sendKeys("A/17 Harimandir Society");
         registerPage.addressLine2().sendKeys("opp. Elite hotel");
         registerPage.cityName().sendKeys("Ahmedabad");
         registerPage.postCode().sendKeys("382424");
@@ -58,13 +51,10 @@ public class RegisterTest extends Base {
         registerPage.selectRadioButton(registerPage.subscribeNo());
         registerPage.selectRadioButton(registerPage.privacyPolicy());
         registerPage.continueButton().click();
+    }
 
-        log.info("Registration process completed");
-    }
-    
-    @AfterMethod
-    public void tearDown() {
-        driver.quit();
-        log.debug("Browser closed");
-    }
+//    @AfterMethod
+//    public void tearDown() {
+//        driver.quit();
+//    }
 }
